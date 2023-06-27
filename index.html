@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .stopwatch {
+    font-size: 4rem;
+    color: #333;
+    text-align: center;
+}
+
+.btn {
+    padding: 0.5rem 1.5rem;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    margin-right: 1rem;
+    cursor: pointer;
+}
+
+    </style>
+</head>
+<body>
+    <div class="stopwatch-container">
+        <h1 class="stopwatch">00:00:00</h1>
+        <button id="start-btn" class="btn">Start</button>
+        <button id="stop-btn" class="btn">Stop</button>
+        <button id="reset-btn" class="btn">Reset</button>
+    </div>    
+</body>
+<script>
+    "use strict"
+    const stopwatch = document.querySelector('.stopwatch');
+let startTime;
+let intervalId;
+
+function startTimer() {
+    startTime = Date.now();
+    intervalId = setInterval(updateTime, 1000);
+}
+
+function updateTime() {
+    const elapsedTime = new Date(Date.now() - startTime);
+    const minutes = elapsedTime.getMinutes().toString().padStart(2, '0');
+    const seconds = elapsedTime.getSeconds().toString().padStart(2, '0');
+    const milliseconds = Math.floor(elapsedTime.getMilliseconds() / 10).toString().padStart(2, '0');
+    stopwatch.innerText = `${minutes}:${seconds}:${milliseconds}`;
+}
+
+function stopTimer() {
+    clearInterval(intervalId);
+}
+
+function resetTimer() {
+    clearInterval(intervalId);
+    stopwatch.innerText = '00:00:00';
+}
+
+document.getElementById('start-btn').addEventListener('click', startTimer);
+document.getElementById('stop-btn').addEventListener('click', stopTimer);
+document.getElementById('reset-btn').addEventListener('click', resetTimer);
+
+</script>
+</html>
+
